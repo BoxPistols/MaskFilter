@@ -323,8 +323,8 @@ http-proxy@^1.8.1:
 
 http-server@^0.11.1:
   version "0.11.1"
-  resolved "https://registry.yarnpkg.com/http-server/-/http-server-0.11.1.tgz#2302a56a6ffef7f9abea0147d838a5e9b6b6a79b"
-  integrity sha512-6JeGDGoujJLmhjiRGlt8yK8Z9Kl0vnl/dQoQZlc4oeqaUoAKQg94NILLfrY3oWzSyFaQCVNTcKE5PZ3cH8VP9w==
+  resolved "http://registry.npm.taobao.org/http-server/download/http-server-0.11.1.tgz#2302a56a6ffef7f9abea0147d838a5e9b6b6a79b"
+  integrity sha1-IwKlam/+9/mr6gFH2Dil6ba2p5s=
   dependencies:
     colors "1.0.3"
     corser "~2.0.0"
