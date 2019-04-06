@@ -44,7 +44,7 @@ The following code initiates the clmtrackr with the default model (see the [refe
 </video>
 <script type="text/javascript">
   var videoInput = document.getElementById('inputVideo');
-  
+
   var ctracker = new clm.tracker();
   ctracker.init();
   ctracker.start(videoInput);
