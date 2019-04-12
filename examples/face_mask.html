@@ -89,18 +89,20 @@
       }
       .nohide ol{
         display: flex;
+        margin-bottom: 5px;
       }
       .nohide ol li{
         margin-right: 10px;
         background: #333;
         width: 25%;
+        padding: 5px;
       }
       .nohide ol li:last-of-type{
         margin-right: 0;
       }
       .maskMenu{
         position: absolute;
-        right: -20px;
+        right: -50px;
         top: 130px;
       }
       h2{
@@ -193,7 +195,7 @@
         ※ 既に起動していた時、認識しない時はCommand＋Rでリロードしてください。前髪はなるべくかからない方が認識しやすいです。
         <br>
         <input id="mask00" type="radio" name="mask" value="0" checked="checked">
-        デフォルト＝顔認識の調整用マスク
+        デフォルト＝顔認識の調整用マスク        
       </label>
 
       <div class="maskMenu">
@@ -214,6 +216,14 @@
           <input id="mask04" type="radio" name="mask" value="4">ガイコツ
         </label>
 
+        <label for="mask05">
+          <input id="mask05" type="radio" name="mask" value="5">校長（本日限定）
+        </label>
+
+        <label for="mask06">
+          <input id="mask06" type="radio" name="mask" value="6">オードリー・<br>ヘップバーン
+        </label>
+
       </div>
 
     </div>
@@ -225,8 +235,11 @@
     <img id="scream" class="masks" src="./media/scream_crop.png"></img>
     <img id="skull" class="masks" src="./media/skullmask2.png"></img>
 
-    <img id="sean" class="masks" src="./media/SeanConnery.jpg"></img>
-    <img id="audrey" class="masks" src="./media/audrey.jpg"></img>
+    <img id="sean" class="masks" src="./media/sugi08.png"></img>
+    <!-- <img id="sean" class="masks" src="./media/SeanConnery.jpg"></img> -->
+    <img id="audrey" class="masks" src="./media/audrey03.png"></img>
+
+
     <img id="cage2" class="masks" src="./media/cage.jpg"></img>
     <img id="nypl" class="masks" src="./media/nypl.jpg"></img>
     <script>
