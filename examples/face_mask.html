@@ -1,13 +1,16 @@
 <!doctype html>
 <html lang="ja">
-
 <head>
   <title>Face mask</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta charset="utf-8">
+  <!-- Google Fonts -->
+  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic"> -->
+  <link rel="stylesheet" href="styles/normalize.css">
+  <link rel="stylesheet" href="styles/milligram.min.css">
+
   <style>
-    @import url(https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700);
 
       body {
         font-family: 'Lato';
@@ -15,6 +18,7 @@
         margin: 0px auto;
         max-width: 1150px;
         color: #fff;
+        padding-top: 50px;
       }
 
 
@@ -27,6 +31,7 @@
         transform : scaleX(-1);
         -ms-filter : fliph; /*IE*/
         filter : fliph; /*IE*/
+        border: 1px solid #f9f9f9;
         opacity: 0.7;
       }
 
@@ -36,23 +41,30 @@
         transform : scaleX(-1);
         -ms-filter : fliph; /*IE*/
         filter : fliph; /*IE*/
+        border: 1px solid #f9f9f9;
       }
 
       #container {
         position : relative;
-        width : 370px;
+        width : 100%;
         /*margin : 0px auto;*/
       }
 
       #content {
+        position: relative;
         margin-top : 10px;
-        margin-left : 100px;
-        margin-right : 100px;
+        margin-left : 30px;
+        margin-right : 30px;
         max-width: 950px;
       }
 
       h2 {
         font-weight : 400;
+        position: fixed;
+        top: -10px;
+        left: 10px;
+        z-index: 10;
+        opacity: .8;
       }
 
       .masks {
@@ -75,6 +87,48 @@
       .nohide {
         display : block;
       }
+      .nohide ol{
+        display: flex;
+      }
+      .nohide ol li{
+        margin-right: 10px;
+        background: #333;
+        width: 25%;
+      }
+      .nohide ol li:last-of-type{
+        margin-right: 0;
+      }
+      .maskMenu{
+        position: absolute;
+        right: -20px;
+        top: 130px;
+      }
+      h2{
+        margin-top: 20px;
+        background-color: #fff;
+        color: crimson;
+        padding: 20px 30px;
+        font-size: 4em;
+        width: 5em;
+        /* text-align: center; */
+        font-family: serif;
+        border-radius: 0 1em 0 1em;
+        z-index: 100000;
+      }
+      input[type="radio"]{
+        margin-right: 8px;
+        vertical-align: text-top;
+      }
+      label{
+        background: #444;
+        padding: 10px 12px 3px;
+        line-height: 1.7;
+      }
+      label:hover{
+        cursor: pointer;
+        background-color: crimson;
+      }
+
     </style>
   <script>
     // getUserMedia only works over https in Chrome 47+, so we redirect to https. Also notify user if running from file.
@@ -83,17 +137,6 @@
     } else if (window.location.hostname !== "localhost" && window.location.protocol !== "https:") {
       window.location.protocol = "https";
     }
-  </script>
-  <script type="text/javascript">
-    // var _gaq = _gaq || [];
-    // _gaq.push(['_setAccount', 'UA-32642923-1']);
-    // _gaq.push(['_trackPageview']);
-
-    // (function() {
-    //   var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    //   ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    //   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
   </script>
 </head>
 
@@ -107,14 +150,31 @@
   <script src="./js/face_deformer.js"></script>
 
   <div id="content">
-    <h2>Face mask</h2>
+    <h2>ザ人面人</h2>
     <div id="container">
       <video id="videoel" width="800" height="600" preload="auto" playsinline autoplay>
       </video>
       <canvas id="overlay" width="800" height="600"></canvas>
       <canvas id="webgl" width="800" height="600"></canvas>
     </div>
-    <br />
+
+
+    <div id="text">
+
+      <div id="gum" class="nohide">
+        <p style="margin: 20px 0 0px 0; font-size:1.2em;">使用法：
+          <ol>
+            <li>カメラ真正面（免許証撮影の角度）に向き合ってください</li>
+            <li>スタートボタンを押し、約５秒静止してください)</li>
+            <li>顔マスクが反応したら好きなマスクを選んでください</li>
+            <li>撮影は自由です</li>
+            <ol>
+        </p>
+      </div>
+
+    </div>
+
+
     <input class="btn" type="button" value="wait, loading video" disabled="disabled" onclick="startVideo()" id="startbutton"></input>
     <!-- <select name="mask" id="selectmask">
         <option value="0">顔認識</option>
@@ -128,61 +188,44 @@
       </select> -->
 
     <div id="selectmask">
-      <label for="mask00">1- ↑顔認識スタート(約５秒、カメラを向いて静止してください)
+      <label for="mask00">1- ↑顔認識スタート(約5~10秒、カメラを向いて静止)
+        <br>
+        ※ 既に起動していた時、認識しない時はCommand＋Rでリロードしてください。前髪はなるべくかからない方が認識しやすいです。
         <br>
         <input id="mask00" type="radio" name="mask" value="0" checked="checked">
-        顔認識の調整用マスク
+        デフォルト＝顔認識の調整用マスク
       </label>
 
+      <div class="maskMenu">
+        <p>2- ↓顔の選択</p>
+        <label for="mask01">
+          <input id="mask01" type="radio" name="mask" value="1">モナリザ
+        </label>
 
-      <br>
-      <p>2- ↓顔の選択</p>
+        <label for="mask02">
+          <input id="mask02" type="radio" name="mask" value="2">アイアンマン
+        </label>
 
-      <label for="mask01">
-        <input id="mask01" type="radio" name="mask" value="1">モナリザ
-      </label>
+        <label for="mask03">
+          <input id="mask03" type="radio" name="mask" value="3">ムンク
+        </label>
 
-      <label for="mask02">
-        <input id="mask02" type="radio" name="mask" value="2">アイアンマン
-      </label>
+        <label for="mask04">
+          <input id="mask04" type="radio" name="mask" value="4">ガイコツ
+        </label>
 
-      <label for="mask03">
-        <input id="mask03" type="radio" name="mask" value="3">ムンク
-      </label>
+      </div>
 
     </div>
 
-    <div id="text">
-      <p>This is an example of face masking using the javascript library <a href="https://github.com/auduno/clmtrackr"><em>clmtrackr</em></a>.</p>
-      <p>Note that this example needs support for WebGL, and works best in Google Chrome.</p>
-      <div id="gum" class="nohide">
-        <p>To try it out:
-          <ol>
-            <li>allow the page to use your webcamera</li>
-            <li>make sure that your face is clearly visible in the video, and click start</li>
-            <li>keep your face still, and wait till model fits your face and mask is applied</li>
-            <li>try out different masks from the dropdown</li>
-            <ol>
-        </p>
-      </div>
-      <div id="nogum" class="hide">
-        <p>
-          There was some problem trying to capture your webcamera, please check that your browser supports WebRTC. Using a fallback video instead. try it out:
-          <ol>
-            <li>click start</li>
-            <li>wait till model fits the face and a mask is applied</li>
-            <li>try out different masks from the dropdown</li>
-          </ol>
-        </p>
-      </div>
-    </div>
     <!-- <a href="https://github.com/auduno/clmtrackr"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png" alt="Fork me on GitHub"></a> -->
     <img id="average" class="masks" src="./media/average.png"></img>
     <img id="monalisa" class="masks" src="./media/joconde.png"></img>
     <img id="ironman" class="masks" src="./media/ironman.png"></img>
     <img id="scream" class="masks" src="./media/scream_crop.png"></img>
+    <img id="skull" class="masks" src="./media/skullmask2.png"></img>
+
     <img id="sean" class="masks" src="./media/SeanConnery.jpg"></img>
-    <img id="skull" class="masks" src="./media/skullmask.jpg"></img>
     <img id="audrey" class="masks" src="./media/audrey.jpg"></img>
     <img id="cage2" class="masks" src="./media/cage.jpg"></img>
     <img id="nypl" class="masks" src="./media/nypl.jpg"></img>
@@ -538,19 +581,78 @@
           [398.9194910642594, 369.6579535284187],
           [466.01878775359233, 368.7792910743897]
         ],
-        "scream" : [
+        "scream": [
           [31.036290655849882, 57.432857152986685],
-          [36.834032422703402, 76.616090763423301], [44.144879197624306, 91.506035663960802], [56.746870626966768, 106.12350665968165], [63.525573844882473, 121.99269842503458], [69.2934094352062, 141.18816557433274], [79.116034591995231, 158.27345628505338], [95.444768276521444, 157.85798622717158], [112.1506100202503, 149.53119369985041],
-          [120.19223108149427, 133.77442783766503], [120.98364439956012, 118.34214249063547], [126.09006592863452, 102.16079319696235], [136.11638867777555, 90.042725252145431], [143.07386026688062, 75.600333966055501], [143.83480182971522, 54.469443259083619], [133.78044168407791, 38.927078049915451], [116.88883196831546, 29.805997108581423],
-          [100.37012716461871, 31.831740142580585], [85.39723434749834, 42.341129078554331], [40.717793723347995, 43.305563127634542], [48.744681128699852, 37.771923766655192], [57.448931896748704, 36.028754590906701], [67.464345519404787, 36.944607085351322], [45.385363552887199, 58.225754147134666], [54.363960101074014, 47.630931768034003],
-          [68.011017790419004, 54.583990783711471], [58.120050008047329, 62.745638214068549], [55.616718436597296, 53.995790698964527], [122.66684453667131, 54.6831401033742], [110.90016888640474, 45.569147756531351], [96.234198458489033, 53.677715067572848], [108.49190790972344, 62.644313336393992], [110.33329194240295, 54.935130623390222],
+          [36.834032422703402, 76.616090763423301],
+          [44.144879197624306, 91.506035663960802],
+          [56.746870626966768, 106.12350665968165],
+          [63.525573844882473, 121.99269842503458],
+          [69.2934094352062, 141.18816557433274],
+          [79.116034591995231, 158.27345628505338],
+          [95.444768276521444, 157.85798622717158],
+          [112.1506100202503, 149.53119369985041],
+          [120.19223108149427, 133.77442783766503],
+          [120.98364439956012, 118.34214249063547],
+          [126.09006592863452, 102.16079319696235],
+          [136.11638867777555, 90.042725252145431],
+          [143.07386026688062, 75.600333966055501],
+          [143.83480182971522, 54.469443259083619],
+          [133.78044168407791, 38.927078049915451],
+          [116.88883196831546, 29.805997108581423],
+          [100.37012716461871, 31.831740142580585],
+          [85.39723434749834, 42.341129078554331],
+          [40.717793723347995, 43.305563127634542],
+          [48.744681128699852, 37.771923766655192],
+          [57.448931896748704, 36.028754590906701],
+          [67.464345519404787, 36.944607085351322],
+          [45.385363552887199, 58.225754147134666],
+          [54.363960101074014, 47.630931768034003],
+          [68.011017790419004, 54.583990783711471],
+          [58.120050008047329, 62.745638214068549],
+          [55.616718436597296, 53.995790698964527],
+          [122.66684453667131, 54.6831401033742],
+          [110.90016888640474, 45.569147756531351],
+          [96.234198458489033, 53.677715067572848],
+          [108.49190790972344, 62.644313336393992],
+          [110.33329194240295, 54.935130623390222],
           [80.887741592339665, 51.027213274581243],
-          [76.364796231779138, 68.40676367915853], [71.204026202304306, 77.172050050826158], [75.730620606370721, 82.644032983592723], [87.363757439691426, 80.118716444055792], [98.704261825861266, 80.021192400105463], [100.92981427616351, 75.460833622671146], [93.832797746290964, 66.709039647758487], [82.448627671183701, 59.880239108276982],
+          [76.364796231779138, 68.40676367915853],
+          [71.204026202304306, 77.172050050826158],
+          [75.730620606370721, 82.644032983592723],
+          [87.363757439691426, 80.118716444055792],
+          [98.704261825861266, 80.021192400105463],
+          [100.92981427616351, 75.460833622671146],
+          [93.832797746290964, 66.709039647758487],
+          [82.448627671183701, 59.880239108276982],
           [78.635928103659296, 73.849587320332546],
-          [92.627257877148452, 73.43767426025039], [79.131242507468116, 114.47649461874275], [77.082061781015526, 104.8161820064411], [76.86256899541047, 91.51976352151155], [84.492130686253887, 87.376289229573757], [89.954070974658805, 90.754539182117583], [96.555921994018263, 100.64436225867991], [98.440888036356, 112.45487645254397],
-          [99.900677251741001, 118.69433160303333], [97.588402646172568, 124.71623282477302], [91.597980889907518, 126.41777298016024], [84.533931967288538, 127.61556713904764], [79.240345390611509, 121.19778971162847], [83.178935170207694, 120.97334887551744], [90.622988915812243, 121.32946906512535], [95.211974749360394, 119.17107481925299],
-          [90.610722471562042, 96.597036966133828], [85.032665543272103, 94.424007443444765], [80.833795006309913, 101.09683414893499], [85.305504524124245, 72.452653823137268], [48.8748794470348, 52.429091513207823], [63.68702721228027, 48.108214917609644], [66.062515145830616, 60.166087383119986], [51.2501982134619, 62.489540249221989],
-          [117.78390022622665, 48.625670298558617], [103.06761868980499, 48.623588434563402], [101.36381278664584, 59.660098601097076], [117.07959483560742, 60.662984572138043]
+          [92.627257877148452, 73.43767426025039],
+          [79.131242507468116, 114.47649461874275],
+          [77.082061781015526, 104.8161820064411],
+          [76.86256899541047, 91.51976352151155],
+          [84.492130686253887, 87.376289229573757],
+          [89.954070974658805, 90.754539182117583],
+          [96.555921994018263, 100.64436225867991],
+          [98.440888036356, 112.45487645254397],
+          [99.900677251741001, 118.69433160303333],
+          [97.588402646172568, 124.71623282477302],
+          [91.597980889907518, 126.41777298016024],
+          [84.533931967288538, 127.61556713904764],
+          [79.240345390611509, 121.19778971162847],
+          [83.178935170207694, 120.97334887551744],
+          [90.622988915812243, 121.32946906512535],
+          [95.211974749360394, 119.17107481925299],
+          [90.610722471562042, 96.597036966133828],
+          [85.032665543272103, 94.424007443444765],
+          [80.833795006309913, 101.09683414893499],
+          [85.305504524124245, 72.452653823137268],
+          [48.8748794470348, 52.429091513207823],
+          [63.68702721228027, 48.108214917609644],
+          [66.062515145830616, 60.166087383119986],
+          [51.2501982134619, 62.489540249221989],
+          [117.78390022622665, 48.625670298558617],
+          [103.06761868980499, 48.623588434563402],
+          [101.36381278664584, 59.660098601097076],
+          [117.07959483560742, 60.662984572138043]
         ],
         "skull": [
           [94.36614797199479, 301.0803014941178],
